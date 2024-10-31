@@ -69,7 +69,7 @@ class TemplateExcel(ExcelWriter):
 #             'AB39': '=SUM(AB36, P30, AB38)',  # Итоговая сумма
 #             'AB40': 'Израсходовано',
 #             'AB41': 'Остаток',  # Можно вычислить формулу в дальнейшем
-#             'AB42': '=IF(AB41 < 0, AB40, 0)',  # Перерасход
+#             'AB42': '=IF(AB41 < 0, AB40, 0)',
 #             'AU9': '=AB39'
 #         }
 
@@ -77,7 +77,7 @@ class TemplateExcel(ExcelWriter):
 
 if __name__ == '__main__':
     template_path = '../data/advance report template 2024.xlsx'  # Укажите путь к шаблону
-    output_path = 'output.xlsx'  # Путь для сохранения нового Excel-файла
+    output_path = '../data/newdata/template_excel.xlsx'  # Путь для сохранения нового Excel-файла
 
     # Создаем экземпляр TemplateExcel
     template_excel = TemplateExcel(template_path, output_path)
@@ -101,7 +101,7 @@ if __name__ == '__main__':
             'AB39': '50000',
             'AB40': '335000',
             'AB41': '=AB39-AB40',  # Можно вычислить формулу в дальнейшем
-            'AB42': '0',  # Перерасход
+            'AB42': '0',
             'AU9': '=AB39',
             'X50': 'Санкт-Петербург - Уфа',
             'X51': 'Уфа - Санкт - Петербург',
