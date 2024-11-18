@@ -5,7 +5,7 @@ from openpyxl.styles import Alignment, Font
 from datetime import datetime
 
 
-class ExcelWriter:
+class ExcelCopy:
     """
     Класс для работы с Excel файлами.
     """
@@ -41,9 +41,9 @@ class ExcelWriter:
             raise
 
 
-class TemplateExcel(ExcelWriter):
+class TemplateExcel(ExcelCopy):
     """
-    Класс для работы с конкретным шаблоном Excel, наследующийся от ExcelWriter.
+    Класс для работы с конкретным шаблоном Excel, наследующийся от ExcelCopy.
     """
 
     def __init__(self, template_path, output_path):
@@ -85,7 +85,7 @@ months = [
 
 if __name__ == '__main__':
     template_path = '../data/advance report template 2024.xlsx'  # Путь к шаблону
-    output_path = '../data/newdata/template_excel.xlsx'  # Путь для сохранения нового Excel-файла
+    output_path = '../data/newdata/new_advance report template 2024.xlsx'  # Путь для сохранения нового Excel-файла
 
     # Создаем экземпляр TemplateExcel
     template_excel = TemplateExcel(template_path, output_path)
