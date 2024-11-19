@@ -1,16 +1,15 @@
 import pytest
 import os
 from openpyxl import load_workbook
-from datetime import datetime
-from src.work_with_excel import ExcelTemplate  # Замените на фактический путь к вашему модулю
+from src.work_with_excel import ExcelTemplate
 
 
 @pytest.fixture
 def setup_paths(tmp_path):
     """Фикстура для создания временных файлов."""
     # Пути к файлам
-    template_path = tmp_path / "template_excel.xlsx"
-    output_path = tmp_path / "new_template_excel.xlsx"
+    template_path = tmp_path / "template.xlsx"
+    output_path = tmp_path / "output.xlsx"
 
     # Создаем временный Excel файл для шаблона
     wb = load_workbook(filename=template_path)
@@ -47,8 +46,8 @@ def test_data_addition(setup_paths):
     # Проверяем добавление данных в ячейки
     wb = load_workbook(output_path)
     ws = wb["Шаблон"]
-    assert ws["G4"].value == 'Вставляем данные', "Данные не были добавлены в ячейку G4"
-    assert ws["G6"].value == 'Еще данные', "Данные не были добавлены в ячейку G6"
+    assert ws["G4"].value == "Вставляем данные", "Данные не были добавлены в ячейку G4"
+    assert ws["G6"].value == "Еще данные", "Данные не были добавлены в ячейку G6"
     wb.close()
 
 
@@ -63,8 +62,12 @@ def test_configuration(setup_paths):
     # Проверяем настройки конфигурации
     wb = load_workbook(output_path)
     ws = wb["Шаблон"]
-    assert ws.column_dimensions["A"].width == 30, "Ширина столбца A не установлена правильно"
-    assert ws.row_dimensions[1].height == 30, "Высота первой строки не установлена правильно"
+    assert (
+        ws.column_dimensions["A"].width == 30
+    ), "Ширина столбца A не установлена правильно"
+    assert (
+        ws.row_dimensions[1].height == 30
+    ), "Высота первой строки не установлена правильно"
     assert ws["C10"].value.startswith("="), "Формула не была добавлена в ячейку C10"
     wb.close()
 
@@ -81,5 +84,7 @@ def test_copy_formatting(setup_paths):
     wb = load_workbook(output_path)
     ws = wb["Шаблон"]
     assert ws["A1"].font.bold, "Шрифт в ячейке A1 не был скопирован как жирный"
-    assert ws["C3"].number_format == '$#,##0', "Формат валюты для столбца C не был установлен"
+    assert (
+        ws["C3"].number_format == "$#,##0"
+    ), "Формат валюты для столбца C не был установлен"
     wb.close()

@@ -2,7 +2,7 @@ import pytest
 import os
 import openpyxl
 from datetime import datetime
-from src.example import TemplateExcel  # Замените на фактический путь, если нужно
+from src.example import TemplateExcel
 
 
 @pytest.fixture
@@ -42,11 +42,11 @@ def test_update_excel(setup_files):
     excel.create_copy()
 
     # Указываем данные для обновления
-    today_date = datetime.now().strftime('%d.%m.%Y')
+    today_date = datetime.now().strftime("%d.%m.%Y")
     updates = {
-        'A2': today_date,
-        'A3': 'Тестовая запись',
-        'B5': 12345,
+        "A2": today_date,
+        "A3": "Тестовая запись",
+        "B5": 12345,
     }
 
     # Обновляем Excel файл
@@ -55,9 +55,11 @@ def test_update_excel(setup_files):
     # Проверяем, что данные записаны корректно
     wb = openpyxl.load_workbook(output_path)
     ws = wb.active
-    assert ws['A2'].value == today_date, "Дата не записана в ячейку A2"
-    assert ws['A3'].value == 'Тестовая запись', "Тестовая запись не была добавлена в ячейку A3"
-    assert ws['B5'].value == 12345, "Число 12345 не записано в ячейку B5"
+    assert ws["A2"].value == today_date, "Дата не записана в ячейку A2"
+    assert (
+        ws["A3"].value == "Тестовая запись"
+    ), "Тестовая запись не была добавлена в ячейку A3"
+    assert ws["B5"].value == 12345, "Число 12345 не записано в ячейку B5"
     wb.close()
 
 
@@ -67,11 +69,11 @@ def test_add_data_method(setup_files):
     excel = TemplateExcel(template_path, output_path)
 
     # Указываем данные для добавления
-    today_date = datetime.now().strftime('%d.%m.%Y')
+    today_date = datetime.now().strftime("%d.%m.%Y")
     updates = {
-        'A2': today_date,
-        'A3': 'Проверка метода add_data',
-        'B5': 67890,
+        "A2": today_date,
+        "A3": "Проверка метода add_data",
+        "B5": 67890,
     }
 
     # Вызываем метод add_data, который должен сначала создать копию, затем обновить данные
@@ -80,7 +82,9 @@ def test_add_data_method(setup_files):
     # Проверяем, что данные обновлены в копии файла
     wb = openpyxl.load_workbook(output_path)
     ws = wb.active
-    assert ws['A2'].value == today_date, "Дата не записана в ячейку A2 через add_data"
-    assert ws['A3'].value == 'Проверка метода add_data', "Запись через add_data не была добавлена в ячейку A3"
-    assert ws['B5'].value == 67890, "Число 67890 не записано в ячейку B5 через add_data"
+    assert ws["A2"].value == today_date, "Дата не записана в ячейку A2 через add_data"
+    assert (
+        ws["A3"].value == "Проверка метода add_data"
+    ), "Запись через add_data не была добавлена в ячейку A3"
+    assert ws["B5"].value == 67890, "Число 67890 не записано в ячейку B5 через add_data"
     wb.close()
